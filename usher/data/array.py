@@ -45,14 +45,23 @@ class NumpyData(Dataset):
     def load_labels(self):
         """ Load the labels """
         labels = self._load(self.datapath.joinpath('Y.pkl'))
-        print(labels.columns)
-        labels[labels.select_dtypes(['category']).columns].apply(
-            lambda x: x.cat.codes
-        )
-        return labels
 
+        # print(labels.columns)
         # convert labels to integers
         #return {task: labels[task].cat.codes for task in labels.columns}
+
+        labels = labels[labels.select_dtypes(['category']).columns].apply(
+            lambda x: x.cat.codes
+        )
+
+        labels = labels.to_dict()
+
+        out = {}
+        for task, label in labels.items():
+            targets = [target for _, target in label.items()]
+            out[task] = targets
+
+        return out
 
     def label_batch(self, idx):
         return {task: label[idx] for task, label in self.labels.items()}
