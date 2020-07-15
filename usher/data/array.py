@@ -45,11 +45,6 @@ class NumpyData(Dataset):
     def load_labels(self):
         """ Load the labels """
         labels = self._load(self.datapath.joinpath('Y.pkl'))
-
-        # print(labels.columns)
-        # convert labels to integers
-        #return {task: labels[task].cat.codes for task in labels.columns}
-
         labels = labels[labels.select_dtypes(['category']).columns].apply(
             lambda x: x.cat.codes
         )
@@ -70,6 +65,5 @@ class NumpyData(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
-        labels = {task: label[idx] for task, label in self.labels.items()}
-        return self.data[idx], labels
+        return self.data[idx], self.label_batch(idx)
 
