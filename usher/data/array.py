@@ -1,3 +1,5 @@
+import pickle
+
 from pathlib import Path
 from enum import Enum, auto
 from torch.utils.data import Dataset
@@ -66,4 +68,12 @@ class NumpyData(Dataset):
 
     def __getitem__(self, idx):
         return self.data[idx], self.label_batch(idx)
+
+
+def create_fold(root: Path, fold: int):
+    """ Create a fold of the data """
+    fold_path = root.joinpath(f"{fold}")
+    train = NumpyData(fold_path, Split.TRAIN)
+    valid = NumpyData(fold_path, Split.VALID)
+    return train, valid
 
