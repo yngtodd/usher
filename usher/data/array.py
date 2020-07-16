@@ -83,7 +83,6 @@ def create_fold(root: Path, fold: int) -> Tuple[NumpyData, NumpyData]:
 def create_random_fold(root: Path, seed: int=13) -> Tuple[NumpyData, NumpyData]:
     """ Create a random fold of the data """
     random.seed(seed)
-    # Choose at random one of 10 folds
     fold = random.randint(0, 9)
     return create_fold(root, fold)
 
