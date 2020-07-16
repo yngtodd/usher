@@ -1,5 +1,7 @@
 import pickle
+import random
 
+from typing import Tuple
 from pathlib import Path
 from enum import Enum, auto
 from torch.utils.data import Dataset
@@ -70,10 +72,18 @@ class NumpyData(Dataset):
         return self.data[idx], self.label_batch(idx)
 
 
-def create_fold(root: Path, fold: int):
+def create_fold(root: Path, fold: int) -> Tuple[NumpyData, NumpyData]:
     """ Create a fold of the data """
     fold_path = root.joinpath(f"{fold}")
     train = NumpyData(fold_path, Split.TRAIN)
     valid = NumpyData(fold_path, Split.VALID)
     return train, valid
+
+
+def create_random_fold(root: Path, seed: int=13) -> Tuple[NumpyData, NumpyData]:
+    """ Create a random fold of the data """
+    random.seed(seed)
+    # Choose at random one of 10 folds
+    fold = random.randint(0, 9)
+    return create_fold(root, fold)
 

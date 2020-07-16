@@ -1,24 +1,15 @@
 from setuptools import setup, find_packages
 
 
-with open('README.rst') as readme_file:
-    readme = readme_file.read()
-
-
-with open('HISTORY.rst') as history_file:
-    history = history_file.read()
-
-
-setup_requirements = ['pytest-runner', ]
-
-
-test_requirements = ['pytest>=3', ]
 requirements = ['argh',]
+test_requirements = ['pytest>=3', ]
+setup_requirements = ['pytest-runner', ]
 
 
 COMMANDS = [
     'greet = usher.cli:greet',
 ]
+
 
 setup(
     author="Todd Young",
@@ -33,11 +24,10 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    description="Data loading...",
+    description="Data loading for token egresses",
     entry_points={'console_scripts': COMMANDS},
     install_requires=requirements,
     license="MIT license",
-    long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='usher',
     name='usher',
