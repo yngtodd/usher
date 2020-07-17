@@ -74,7 +74,7 @@ class NumpyData(Dataset):
 
 def create_fold(root: Path, fold: int) -> Tuple[NumpyData, NumpyData]:
     """ Create a fold of the data """
-    fold_path = root.joinpath(f"{fold}")
+    fold_path = root.joinpath(f"0{fold}")
     train = NumpyData(fold_path, Split.TRAIN)
     valid = NumpyData(fold_path, Split.VALID)
     return train, valid
